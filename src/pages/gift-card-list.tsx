@@ -1,63 +1,46 @@
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid2";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import { giftCardData, IGiftCard } from "../assets/data";
-
-interface GiftCardItemProps {
-  card: IGiftCard;
-}
-
-const GiftCardItem: React.FC<GiftCardItemProps> = ({ card }) => {
-  return (
-    <Grid
-      size={{ xs: 12, sm: 6, md: 4, lg: 3 }}
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Card
-        sx={{
-          width: 300,
-          height: 200,
-          boxShadow: 3,
-          borderRadius: 2,
-        }}
-      >
-        <CardContent>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{
-              fontWeight: "bold",
-              mb: 1,
-            }}
-          >
-            {card.cardName}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Value: ${card.value}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Expiration Date: {card.expirationDate}
-          </Typography>
-          <Typography
-            variant="body2"
-            color={card.isActive ? "success.main" : "error.main"}
-          >
-            Status: {card.isActive ? "Active" : "Inactive"}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Recipient: {card.recipientEmail}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Grid>
-  );
-};
+import { IGiftCard } from "../assets/data";
+import GiftCardItem from "../components/gift-card-item";
+import { mockApiCall } from "../services/mockApiCall";
 
 const GiftCardList = () => {
+  const [giftCards, setGiftCard] = useState<IGiftCard[] | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchGiftCards = async () => {
+    try {
+      const response = await mockApiCall();
+      setGiftCard(response.data);
+    } catch (error) {
+      console.error("Error fetching gift cards:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchGiftCards();
+  }, []);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <Grid
       container
@@ -65,7 +48,7 @@ const GiftCardList = () => {
       justifyContent="center"
       width="100%"
     >
-      {giftCardData.map((card) => (
+      {giftCards?.map((card) => (
         <GiftCardItem key={card.id} card={card} />
       ))}
     </Grid>
