@@ -1,50 +1,76 @@
-# React + TypeScript + Vite
+# React App with List Display
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React app created with Vite, showcasing a simple application that fetches and displays a list of gift cards. It uses Material-UI (`@mui/material`) for UI components and is designed to be responsive and user-friendly.
 
-Currently, two official plugins are available:
+## Task Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Create a new React app using the latest version of React. The app should consist of a single
+page that fulfils the following criteria:
 
-## Expanding the ESLint configuration
+### Requirements
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Display a list on the home page, presented either as a series of cards or in a table format.
+2. Populate the list using a mock Axios API call. Simulate the API call by returning data from
+   within a function.
 
-- Configure the top-level `parserOptions` property like this:
+3. Include a side navigation (sidenav) or header navigation with a placeholder menu.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+4. Utilize React hooks to fetch and display the data. Implement navigation as well.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+5. This page should be responsive. You can utilize either styled component, material UI,
+   Tailwind or any preferred CSS framework.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Project Structure
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- `src/App.tsx`: Main entry component for the app, renders the `Header` and `GiftCardList` components.
+- `src/pages/gift-card-list.tsx`: Fetches and displays the list of gift cards, handles the data fetching and loading states.
+- `src/components/header.tsx`: Header component for the app, contains navigation links.
+- `src/components/gift-card-item.tsx`: Displays individual gift card details.
+- `src/services/mockApiCall.ts`: Mocks an API call for fetching gift cards.
+
+## Running the App
+
+### Prerequisites
+
+Ensure that you have the following installed on your machine:
+
+- [Node.js](https://nodejs.org/) (LTS version recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) (for package management)
+
+### Getting Started
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/ZainElabdeen/bamboo-card.git
+   cd bamboo-card
+   ```
+
+2. Install dependencies
+
+   If you are using `npm`:
+
+   ```bash
+   npm install
+   ```
+
+   If you are using yarn:
+
+   ```bash
+   yarn install
+   ```
+
+3. Start the development server
+   If you are using `npm`:
+
+   ```bash
+   npm run dev
+   ```
+
+   If you are using yarn:
+
+   ```bash
+   yarn dev
+   ```
+
+The application will now be running at http://localhost:5173.
